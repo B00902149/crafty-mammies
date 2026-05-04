@@ -1,0 +1,183 @@
+/* =========================================
+   CRAFTY MAMMIES — Responsive
+   Breakpoints: tablet 1024px, mobile 768px
+   ========================================= */
+
+/* ---- TABLET ---- */
+@media (max-width: 1024px) {
+
+  .container { padding: 0 var(--space-lg); }
+
+  .nav { padding: 0 32px; }
+  .nav-links { gap: 24px; }
+
+  .hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left { padding: 64px 48px; }
+
+  .hero-right { min-height: 380px; }
+
+  .split-section { padding: var(--space-xl) 48px; }
+
+  .services-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .footer { padding: 48px 48px 28px; }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+
+  .container { padding: 0 var(--space-sm); }
+
+  /* Nav */
+  .nav { padding: 0 20px; height: 64px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* Hero layout */
+  .hero { grid-template-columns: 1fr; }
+
+  .hero-left { padding: 48px 24px 40px; }
+
+  .hero-right { min-height: 380px; }
+
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn { text-align: center; width: 100%; }
+
+  /* Trust stats — 2×2 grid on mobile */
+  .hero-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+    margin-top: 36px;
+    padding-top: 28px;
+  }
+
+  .trust-num { font-size: 22px; }
+  .trust-label { font-size: 11px; }
+
+  /* Hero image cards — scale down for mobile */
+  .hero-img-card { padding: 8px; }
+
+  .hero-img-card.main {
+    width: 190px;
+    height: 240px;
+    transform: translate(-62%, -52%) rotate(-2deg);
+  }
+
+  .hero-img-card.secondary {
+    width: 135px;
+    height: 162px;
+    transform: translate(0%, -65%) rotate(4deg);
+  }
+
+  .hero-img-card.tertiary {
+    width: 112px;
+    height: 126px;
+    transform: translate(-5%, 8%) rotate(-1deg);
+  }
+
+  /* Trust bar */
+  .trust-bar {
+    padding: 14px 24px;
+    gap: 24px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trust-bar-divider { display: none; }
+
+  /* Split section */
+  .split-section {
+    padding: 48px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .split-card {
+    min-height: auto;
+    padding: 40px 28px;
+  }
+
+  /* Services */
+  .services-section { padding: 56px 20px; }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .services-grid .service-card:last-child { grid-column: 1 / -1; }
+
+  /* How it works */
+  .hiw-section { padding: 56px 20px; }
+
+  .hiw-steps {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hiw-steps::before { display: none; }
+
+  /* Reviews */
+  .reviews-section { padding: 56px 20px; }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Featured grid */
+  .featured-section { padding: 48px 20px; }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+    gap: 12px;
+  }
+
+  .featured-card--large { grid-column: span 1; }
+
+  /* CTA banner */
+  .cta-banner { padding: 56px 24px; }
+
+  .cta-banner-title { font-size: 36px; }
+
+  .cta-banner-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-banner-btns .btn {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  /* Section headers */
+  .section-title { font-size: 28px; }
+
+  /* Footer */
+  .footer { padding: 48px 20px 24px; }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}

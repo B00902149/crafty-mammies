@@ -1,0 +1,187 @@
+/* =========================================
+   CRAFTY MAMMIES — Components
+   ========================================= */
+
+/* ----- BUTTONS ----- */
+.btn {
+  display: inline-block;
+  padding: 15px 32px;
+  border-radius: var(--radius-pill);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition), color var(--transition),
+              border-color var(--transition), transform var(--transition);
+  text-decoration: none;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--pink);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--pink-dark); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--black);
+  border: 1.5px solid #ddd;
+}
+.btn-secondary:hover { border-color: var(--pink); color: var(--pink); }
+
+.btn-white {
+  background: var(--white);
+  color: var(--black);
+}
+.btn-white:hover { background: #f5f5f5; }
+
+.btn-outline-white {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+.btn-outline-white:hover { border-color: var(--white); }
+
+/* ----- SECTION HEADER ----- */
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.5vw, 40px);
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.2;
+}
+
+.section-title .script-inline {
+  font-family: var(--script);
+  color: var(--pink);
+  font-size: 1.1em;
+}
+
+/* ----- REVIEW CARD ----- */
+.review-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  border: 1px solid #f0d6e8;
+}
+
+.review-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 16px;
+}
+
+.star {
+  width: 14px;
+  height: 14px;
+  background: var(--pink);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%,
+                     79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                     2% 35%, 39% 35%);
+}
+
+.review-text {
+  font-size: 14.5px;
+  color: var(--black);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.review-author {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pink-dark);
+}
+
+/* ----- SERVICE CARD ----- */
+.service-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: border-color var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+
+.service-card:hover {
+  border-color: var(--pink-light);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(234, 114, 164, 0.1);
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--pink-pale);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.service-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--black);
+}
+
+.service-desc {
+  font-size: 12.5px;
+  color: var(--grey);
+  line-height: 1.5;
+}
+
+/* ----- TRUST BAR ----- */
+.trust-bar {
+  background: var(--pink);
+  padding: 14px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.trust-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.trust-bar-item svg { opacity: 0.9; flex-shrink: 0; }
+
+.trust-bar-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.3);
+}

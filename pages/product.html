@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crafty Mammies — Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
+
+  <style>
+    /* ══════════════════════════════════════════════════
+       NAV — matches the shared components.css pattern
+    ══════════════════════════════════════════════════ */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      background: var(--white, #fff);
+      border-bottom: 1px solid #f0e6ec;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(234,114,164,0.07);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-logo-badge {
+      width: 38px; height: 38px;
+      background: #EA72A4;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-badge span {
+      font-family: 'Dancing Script', cursive;
+      font-size: 15px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .nav-logo-text .script {
+      font-family: 'Dancing Script', cursive;
+      font-size: 20px;
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+
+    .nav-logo-text .tagline {
+      font-size: 10.5px;
+      color: #888;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 13.5px;
+      color: #444;
+      font-weight: 400;
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: #EA72A4; }
+
+    .btn {
+      display: inline-block;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      border: 1.5px solid transparent;
+      padding: 10px 22px;
+    }
+
+    .btn-primary {
+      background: #EA72A4;
+      color: #fff;
+      border-color: #EA72A4;
+    }
+
+    .btn-primary:hover { background: #c45589; border-color: #c45589; }
+
+    .btn-secondary {
+      background: transparent;
+      color: #EA72A4;
+      border-color: #EA72A4;
+    }
+
+    .btn-secondary:hover { background: #fce8f3; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0; right: 0;
+      width: min(320px, 90vw);
+      height: 100vh;
+      background: #fff;
+      z-index: 200;
+      flex-direction: column;
+      padding: 32px 28px;
+      gap: 4px;
+      box-shadow: -4px 0 32px rgba(0,0,0,0.12);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-mobile.open {
+      display: flex;
+      transform: translateX(0);
+    }
+
+    .nav-mobile a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #1a1a1a;
+      padding: 12px 0;
+      border-bottom: 1px solid #f5eef2;
+      font-weight: 400;
+    }
+
+    .nav-mobile a:hover { color: #EA72A4; }
+
+    .nav-mobile-close {
+      background: none;
+      border: none;
+      font-size: 26px;
+      color: #888;
+      cursor: pointer;
+      align-self: flex-end;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════ */
+    .footer {
+      background: #1a1a1a;
+      color: #ccc;
+      padding: 52px 40px 28px;
+      font-size: 13px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-brand .script {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: #fff;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .footer-brand .tagline {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #EA72A4;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p { line-height: 1.7; color: #999; font-size: 12.5px; }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .footer-col ul a {
+      text-decoration: none;
+      color: #999;
+      font-size: 12.5px;
+      transition: color 0.18s;
+    }
+
+    .footer-col ul a:hover { color: #EA72A4; }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid #2e2e2e;
+      font-size: 11.5px;
+      color: #666;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Responsive nav */
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .footer { padding: 40px 24px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    :root {
+      --pink:        #EA72A4;
+      --pink-light:  #fce8f3;
+      --pink-deep:   #c45589;
+      --pink-pale:   #fdf4f9;
+      --dark:        #1a1a1a;
+      --mid:         #6b6b6b;
+      --border:      #ede0e8;
+      --light:       #f9f4f7;
+      --white:       #ffffff;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --script:      'Dancing Script', cursive;
+      --sans:        'DM Sans', sans-serif;
+      --radius:      10px;
+      --radius-lg:   16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--sans); color: var(--dark); background: var(--white); font-size: 14px; line-height: 1.6; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { background: var(--light); padding: 13px 32px; font-size: 12.5px; color: var(--mid); border-bottom: 1px solid var(--border); }
+    .breadcrumb a { color: var(--pink); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 7px; color: #ccc; }
+
+    /* ── Page wrapper ── */
+    .product-page { max-width: 1200px; margin: 0 auto; padding: 36px 24px 80px; }
+
+    /* ══════════════════════════
+       3-COLUMN LAYOUT
+    ══════════════════════════ */
+    .product-layout {
+      display: grid;
+      grid-template-columns: 76px 1fr 420px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── Thumbnail column ── */
+    .thumb-col { display: flex; flex-direction: column; gap: 8px; position: sticky; top: 24px; }
+
+    .thumb {
+      width: 72px; height: 72px;
+      border-radius: 8px; overflow: hidden; cursor: pointer;
+      border: 2px solid transparent; flex-shrink: 0;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      background: var(--light);
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb:hover { border-color: var(--pink); }
+    .thumb.active { border-color: var(--pink); box-shadow: 0 0 0 2px var(--pink-light); }
+
+    /* ── Main image column ── */
+    .main-img-col { position: sticky; top: 24px; }
+
+    .main-img-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--light);
+      aspect-ratio: 1;
+    }
+
+    .main-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s ease; }
+
+    /* Live preview overlay */
+    .preview-overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 12%;
+    }
+
+    .preview-name {
+      font-family: var(--script);
+      font-size: clamp(32px, 5.5vw, 50px);
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 30px rgba(234,114,164,0.4);
+      letter-spacing: 0.02em;
+      transition: opacity 0.25s ease;
+      opacity: 0;
+      user-select: none;
+      text-align: center;
+      max-width: 90%;
+      word-break: break-word;
+    }
+
+    .preview-name.visible { opacity: 1; }
+    .preview-name.font-script  { font-family: 'Dancing Script', cursive; }
+    .preview-name.font-serif   { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    .preview-name.font-sans    { font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: 0.12em; }
+    .preview-name.font-block   { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+
+    .main-img-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--pink); color: #fff;
+      font-size: 11px; font-weight: 500; padding: 4px 12px;
+      border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    .zoom-hint {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(255,255,255,0.85); color: var(--mid);
+      font-size: 11px; padding: 5px 10px; border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Info column ── */
+    .info-col { min-width: 0; }
+
+    .info-eyebrow { font-size: 11.5px; font-weight: 500; color: var(--pink); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+
+    .info-title { font-family: var(--serif); font-size: clamp(26px, 3vw, 36px); font-weight: 600; line-height: 1.15; margin-bottom: 10px; }
+    .info-title .script { font-family: var(--script); color: var(--pink); font-weight: 400; font-size: 1.1em; }
+
+    .rating-strip { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 13px; }
+    .stars { color: #f5a623; letter-spacing: 1px; font-size: 14px; }
+    .rating-count { color: var(--mid); }
+    .rating-sep { color: var(--border); }
+    .reviews-link { color: var(--pink); text-decoration: none; font-size: 12px; }
+    .reviews-link:hover { text-decoration: underline; }
+
+    .info-desc { color: var(--mid); font-size: 13.5px; line-height: 1.7; margin-bottom: 20px; }
+
+    .trust-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+    .trust-pill { background: var(--pink-light); color: var(--pink-deep); font-size: 11.5px; font-weight: 500; padding: 5px 12px; border-radius: 20px; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+    /* ── Options ── */
+    .opt-section { margin-bottom: 18px; }
+
+    .opt-label { font-size: 12.5px; font-weight: 500; margin-bottom: 9px; display: flex; align-items: center; gap: 6px; color: var(--dark); }
+    .opt-label em { font-style: normal; font-weight: 400; color: var(--pink); background: var(--pink-light); padding: 1px 8px; border-radius: 10px; font-size: 11px; }
+
+    .size-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .size-btn {
+      padding: 7px 15px; border: 1.5px solid var(--border);
+      border-radius: 8px; background: var(--white);
+      font-family: var(--sans); font-size: 12.5px; cursor: pointer;
+      transition: all 0.15s; color: var(--dark);
+    }
+    .size-btn:hover, .size-btn.selected { border-color: var(--pink); background: var(--pink-light); color: var(--pink-deep); font-weight: 500; }
+
+    .colour-row { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+
+    .swatch {
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      border: 2.5px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .swatch:hover { transform: scale(1.15); }
+    .swatch.selected { border-color: var(--pink); transform: scale(1.1); box-shadow: 0 0 0 2px var(--pink-light); }
+
+    .swatch[data-name]:hover::after {
+      content: attr(data-name);
+      position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
+      background: var(--dark); color: #fff;
+      font-size: 10px; padding: 2px 7px; border-radius: 4px;
+      white-space: nowrap; pointer-events: none; z-index: 10;
+    }
+
+    .qty-row { display: flex; align-items: center; gap: 14px; }
+    .qty-wrap { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .qty-btn { width: 34px; height: 34px; border: none; background: var(--light); font-size: 17px; cursor: pointer; color: var(--mid); display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; }
+    .qty-btn:hover { background: var(--pink-light); color: var(--pink); }
+    .qty-input { width: 44px; text-align: center; border: none; outline: none; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--dark); }
+
+    /* ══════════════════════════
+       PERSONALISATION PANEL
+    ══════════════════════════ */
+    .personal-panel { border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px; }
+
+    .personal-header {
+      background: var(--pink-pale); padding: 13px 18px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; user-select: none;
+    }
+
+    .personal-header-icon { width: 32px; height: 32px; background: var(--pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+
+    .personal-header-text h3 { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+    .personal-header-text p { font-size: 11.5px; color: var(--mid); }
+
+    .personal-header-arrow { margin-left: auto; color: var(--mid); font-size: 18px; transition: transform 0.25s; }
+    .personal-header.open .personal-header-arrow { transform: rotate(180deg); }
+
+    .personal-body { padding: 18px; display: none; }
+    .personal-body.open { display: block; }
+
+    .name-input-wrap { position: relative; margin-bottom: 14px; }
+
+    .name-input {
+      width: 100%; padding: 12px 42px 12px 14px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: var(--sans); font-size: 14px; color: var(--dark);
+      transition: border-color 0.2s; background: var(--white);
+    }
+    .name-input:focus { outline: none; border-color: var(--pink); }
+
+    .name-input-char { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--mid); }
+
+    .preview-indicator {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11.5px; color: var(--pink);
+      margin-bottom: 14px; opacity: 0; transition: opacity 0.3s;
+    }
+    .preview-indicator.visible { opacity: 1; }
+
+    .preview-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.7); } }
+
+    /* Font picker */
+    .font-picker { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+
+    .font-btn {
+      padding: 10px 8px; border: 1.5px solid var(--border);
+      border-radius: 8px; background: var(--white);
+      cursor: pointer; text-align: center;
+      transition: all 0.15s; line-height: 1.3;
+    }
+    .font-btn:hover, .font-btn.selected { border-color: var(--pink); background: var(--pink-light); }
+
+    .font-btn-preview { display: block; font-size: 17px; color: var(--dark); margin-bottom: 2px; }
+    .font-btn-label { font-size: 10px; color: var(--mid); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Text colour */
+    .text-colour-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+
+    .text-colour-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2.5px solid transparent; cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .text-colour-btn:hover { transform: scale(1.15); }
+    .text-colour-btn.selected { border-color: var(--dark); transform: scale(1.1); }
+
+    .extra-notes {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: var(--sans); font-size: 13px; color: var(--dark);
+      resize: vertical; min-height: 70px; transition: border-color 0.2s;
+    }
+    .extra-notes:focus { outline: none; border-color: var(--pink); }
+
+    .field-label { font-size: 12px; font-weight: 500; color: var(--mid); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+    .btn-order {
+      width: 100%; padding: 15px; background: var(--pink); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-family: var(--sans); font-size: 14.5px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-order:hover { background: var(--pink-deep); transform: translateY(-1px); }
+
+    .btn-enquire {
+      width: 100%; padding: 13px; background: transparent;
+      border: 1.5px solid var(--border); color: var(--mid);
+      border-radius: var(--radius); font-family: var(--sans);
+      font-size: 13.5px; cursor: pointer; transition: all 0.18s;
+      text-decoration: none; display: flex; align-items: center;
+      justify-content: center; gap: 7px;
+    }
+    .btn-enquire:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-light); }
+
+    /* Delivery info */
+    .delivery-info { background: var(--light); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 9px; font-size: 13px; }
+    .delivery-row { display: flex; align-items: center; gap: 10px; color: var(--mid); }
+    .delivery-row strong { color: var(--dark); }
+    .delivery-icon { width: 28px; height: 28px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+    /* Process strip */
+    .process-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .process-step { text-align: center; padding: 16px 12px; background: var(--light); border-radius: var(--radius); }
+    .process-step-icon { font-size: 20px; margin-bottom: 7px; }
+    .process-step h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .process-step p { font-size: 11.5px; color: var(--mid); line-height: 1.5; }
+
+    /* ── Reviews ── */
+    .reviews-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+
+    .reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+
+    .reviews-title { font-family: var(--serif); font-size: 26px; font-weight: 600; }
+    .reviews-title .script { font-family: var(--script); color: var(--pink); font-weight: 400; }
+
+    .reviews-summary { display: flex; align-items: center; gap: 16px; }
+    .reviews-big-score { font-family: var(--serif); font-size: 48px; font-weight: 600; line-height: 1; }
+    .reviews-meta { display: flex; flex-direction: column; gap: 2px; }
+    .reviews-stars-lg { color: #f5a623; font-size: 18px; }
+    .reviews-count { font-size: 12px; color: var(--mid); }
+
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .review-card { background: var(--light); border-radius: var(--radius-lg); padding: 20px; }
+    .review-card-stars { color: #f5a623; font-size: 13px; margin-bottom: 10px; }
+    .review-card-text { font-size: 13.5px; color: var(--dark); line-height: 1.6; margin-bottom: 14px; font-style: italic; }
+    .review-card-author { display: flex; align-items: center; gap: 10px; }
+    .review-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #fff; flex-shrink: 0; }
+    .review-author-name { font-size: 13px; font-weight: 500; }
+    .review-author-date { font-size: 11px; color: var(--mid); }
+
+    /* ── Modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,26,0.55); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+
+    .modal { background: var(--white); border-radius: 18px; padding: 36px; max-width: 540px; width: 100%; max-height: 92vh; overflow-y: auto; box-shadow: 0 28px 80px rgba(0,0,0,0.22); animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .modal-title { font-family: var(--serif); font-size: 26px; font-weight: 600; }
+    .modal-title .script { font-family: var(--script); color: var(--pink); font-weight: 400; }
+
+    .modal-close { background: var(--light); border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 17px; cursor: pointer; color: var(--mid); display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; margin-left: 12px; flex-shrink: 0; }
+    .modal-close:hover { background: var(--pink-light); color: var(--pink); }
+
+    .order-summary-box { background: var(--light); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; font-size: 13px; line-height: 1.7; color: var(--mid); }
+    .order-summary-box strong { color: var(--dark); }
+
+    .mform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .mform-row.full { grid-template-columns: 1fr; }
+    .mform-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .mform-group label { font-size: 11.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid); }
+
+    .mform-group input, .mform-group select, .mform-group textarea {
+      padding: 10px 13px; border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: var(--sans); font-size: 13.5px; color: var(--dark);
+      background: var(--white); transition: border-color 0.2s;
+    }
+    .mform-group input:focus, .mform-group select:focus, .mform-group textarea:focus { outline: none; border-color: var(--pink); }
+    .mform-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-submit { width: 100%; padding: 14px; background: var(--pink); color: #fff; border: none; border-radius: var(--radius); font-family: var(--sans); font-size: 14.5px; font-weight: 500; cursor: pointer; transition: background 0.2s; margin-top: 6px; }
+    .form-submit:hover { background: var(--pink-deep); }
+
+    .form-note { text-align: center; font-size: 11.5px; color: var(--mid); margin-top: 10px; }
+
+    .success-state { text-align: center; padding: 16px 0; display: none; }
+    .success-icon { width: 62px; height: 62px; background: var(--pink-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 18px; }
+    .success-state h3 { font-family: var(--serif); font-size: 26px; font-weight: 600; margin-bottom: 8px; }
+    .success-state p { color: var(--mid); margin-bottom: 22px; font-size: 13.5px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .product-layout { grid-template-columns: 60px 1fr; }
+      .info-col { grid-column: 1 / -1; }
+      .thumb-col { flex-direction: row; overflow-x: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .product-layout { grid-template-columns: 1fr; }
+      .thumb-col { flex-direction: row; overflow-x: auto; order: 2; }
+      .main-img-col { order: 1; }
+      .info-col { order: 3; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .process-strip { grid-template-columns: 1fr; gap: 10px; }
+      .mform-row { grid-template-columns: 1fr; }
+      .modal { padding: 24px 18px; }
+      .breadcrumb { padding: 11px 18px; }
+      .font-picker { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="nav">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-badge"><span>CM</span></div>
+        <div class="nav-logo-text">
+          <span class="script">Crafty Mammies</span>
+          <span class="tagline">Embroidery &amp; Printing Specialists</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="gifts.html">Personalised Gifts</a></li>
+        <li><a href="workwear.html">Workwear</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="workwear.html#quote" class="btn btn-primary" style="padding:9px 22px;font-size:13px;">Get a Quote</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </nav>
+    <nav class="nav-mobile" aria-label="Mobile navigation">
+      <button class="nav-mobile-close" aria-label="Close menu">&times;</button>
+      <a href="../index.html">Home</a>
+      <a href="gifts.html">Personalised Gifts</a>
+      <a href="workwear.html">Workwear</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="workwear.html#quote">Get a Quote</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a><span>›</span>
+    <a href="gifts.html">Gifts</a><span>›</span>
+    <span id="bc-name">Loading…</span>
+  </nav>
+
+  <main class="product-page">
+    <div class="product-layout">
+
+      <!-- COL 1: Thumbnails -->
+      <div class="thumb-col" id="thumb-col"></div>
+
+      <!-- COL 2: Main image + live preview -->
+      <div class="main-img-col">
+        <div class="main-img-wrap">
+          <img id="main-img" src="" alt="" />
+          <div class="preview-overlay">
+            <span class="preview-name font-script" id="preview-name"></span>
+          </div>
+          <span class="main-img-badge" id="main-badge">Personalised</span>
+          <span class="zoom-hint">✦ Live preview</span>
+        </div>
+      </div>
+
+      <!-- COL 3: Product info & options -->
+      <div class="info-col">
+
+        <p class="info-eyebrow" id="info-eyebrow"></p>
+        <h1 class="info-title" id="info-title"></h1>
+
+        <div class="rating-strip">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">5.0</span>
+          <span class="rating-sep">|</span>
+          <a href="#reviews" class="reviews-link">See all reviews</a>
+        </div>
+
+        <p class="info-desc" id="info-desc"></p>
+        <div class="trust-row" id="trust-row"></div>
+
+        <hr class="divider" />
+
+        <div class="opt-section" id="sizes-section">
+          <div class="opt-label">Size <em id="size-chosen"></em></div>
+          <div class="size-grid" id="sizes-grid"></div>
+        </div>
+
+        <div class="opt-section" id="colours-section">
+          <div class="opt-label">Garment colour <em id="colour-chosen"></em></div>
+          <div class="colour-row" id="colours-row"></div>
+        </div>
+
+        <div class="opt-section">
+          <div class="opt-label">Quantity</div>
+          <div class="qty-row">
+            <div class="qty-wrap">
+              <button class="qty-btn" onclick="changeQty(-1)">−</button>
+              <input class="qty-input" type="number" id="qty" value="1" min="1" readonly />
+              <button class="qty-btn" onclick="changeQty(1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- PERSONALISATION PANEL -->
+        <div class="personal-panel">
+          <div class="personal-header open" id="personal-toggle" onclick="togglePersonal()">
+            <div class="personal-header-icon">✏️</div>
+            <div class="personal-header-text">
+              <h3>Add personalisation</h3>
+              <p>Type a name — watch it appear on the product</p>
+            </div>
+            <span class="personal-header-arrow">⌄</span>
+          </div>
+          <div class="personal-body open" id="personal-body">
+
+            <label class="field-label" for="name-input">Name / text to print</label>
+            <div class="name-input-wrap">
+              <input class="name-input" id="name-input" type="text" maxlength="20" placeholder="e.g. Sophie" oninput="updatePreview()" />
+              <span class="name-input-char" id="char-count">0/20</span>
+            </div>
+
+            <div class="preview-indicator" id="preview-indicator">
+              <span class="preview-dot"></span>
+              Live preview showing on image ↑
+            </div>
+
+            <label class="field-label">Font style</label>
+            <div class="font-picker">
+              <button class="font-btn selected" onclick="setFont('font-script', this)">
+                <span class="font-btn-preview" style="font-family:'Dancing Script',cursive">Sophie</span>
+                <span class="font-btn-label">Cursive</span>
+              </button>
+              <button class="font-btn" onclick="setFont('font-serif', this)">
+                <span class="font-btn-preview" style="font-family:'Cormorant Garamond',serif;font-style:italic">Sophie</span>
+                <span class="font-btn-label">Italic serif</span>
+              </button>
+              <button class="font-btn" onclick="setFont('font-sans', this)">
+                <span class="font-btn-preview" style="font-family:'DM Sans',sans-serif;letter-spacing:0.1em;font-size:14px">SOPHIE</span>
+                <span class="font-btn-label">Clean caps</span>
+              </button>
+              <button class="font-btn" onclick="setFont('font-block', this)">
+                <span class="font-btn-preview" style="font-family:'DM Sans',sans-serif;font-weight:700;letter-spacing:0.15em;font-size:14px">SOPHIE</span>
+                <span class="font-btn-label">Bold block</span>
+              </button>
+            </div>
+
+            <label class="field-label">Text colour</label>
+            <div class="text-colour-row">
+              <button class="text-colour-btn selected" data-colour="#ffffff" style="background:#fff;border-color:#999" onclick="setTextColour('#ffffff',this)" title="White"></button>
+              <button class="text-colour-btn" data-colour="#EA72A4" style="background:#EA72A4" onclick="setTextColour('#EA72A4',this)" title="Pink"></button>
+              <button class="text-colour-btn" data-colour="#f5d76e" style="background:#f5d76e" onclick="setTextColour('#f5d76e',this)" title="Gold"></button>
+              <button class="text-colour-btn" data-colour="#1a1a1a" style="background:#1a1a1a" onclick="setTextColour('#1a1a1a',this)" title="Black"></button>
+              <button class="text-colour-btn" data-colour="#5b8dd9" style="background:#5b8dd9" onclick="setTextColour('#5b8dd9',this)" title="Blue"></button>
+              <button class="text-colour-btn" data-colour="#e87a5b" style="background:#e87a5b" onclick="setTextColour('#e87a5b',this)" title="Coral"></button>
+              <button class="text-colour-btn" data-colour="#6cc580" style="background:#6cc580" onclick="setTextColour('#6cc580',this)" title="Green"></button>
+              <button class="text-colour-btn" data-colour="#7c5cbc" style="background:#7c5cbc" onclick="setTextColour('#7c5cbc',this)" title="Purple"></button>
+            </div>
+
+            <label class="field-label" style="margin-top:14px" for="extra-notes">Additional design notes</label>
+            <textarea class="extra-notes" id="extra-notes" placeholder="e.g. add a dinosaur graphic, rainbow colours, it's for a 5-year-old girl…"></textarea>
+
+          </div>
+        </div>
+
+        <div class="cta-stack">
+          <button class="btn-order" onclick="openModal()">Place your order →</button>
+          <a class="btn-enquire" href="contact.html">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Ask a question before ordering
+          </a>
+        </div>
+
+        <div class="delivery-info">
+          <div class="delivery-row"><div class="delivery-icon">📍</div><div>Dispatched from <strong>Ballyclare, Co. Antrim</strong></div></div>
+          <div class="delivery-row"><div class="delivery-icon">⚡</div><div>Ready in <strong>1–2 business days</strong></div></div>
+          <div class="delivery-row"><div class="delivery-icon">🚗</div><div><strong>Collect free</strong> from 54 The Square, Ballyclare</div></div>
+          <div class="delivery-row"><div class="delivery-icon">📦</div><div>Or we'll <strong>post it</strong> to you (NI, ROI &amp; GB)</div></div>
+        </div>
+
+        <div class="process-strip">
+          <div class="process-step"><div class="process-step-icon">✏️</div><h4>You choose</h4><p>Pick your options &amp; personalisation</p></div>
+          <div class="process-step"><div class="process-step-icon">👀</div><h4>We proof it</h4><p>Digital proof sent before printing</p></div>
+          <div class="process-step"><div class="process-step-icon">📦</div><h4>Ready fast</h4><p>Collect or posted in 1–2 days</p></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <section class="reviews-section" id="reviews">
+      <div class="reviews-header">
+        <h2 class="reviews-title">What <span class="script">customers say.</span></h2>
+        <div class="reviews-summary">
+          <span class="reviews-big-score">5.0</span>
+          <div class="reviews-meta">
+            <span class="reviews-stars-lg">★★★★★</span>
+            <span class="reviews-count" id="review-count">Based on recent orders</span>
+          </div>
+        </div>
+      </div>
+      <div class="reviews-grid" id="reviews-grid"></div>
+    </section>
+  </main>
+
+  <!-- ORDER MODAL -->
+  <div class="modal-overlay" id="modal" onclick="handleOverlay(event)">
+    <div class="modal">
+      <div class="modal-top">
+        <h2 class="modal-title">Place your <span class="script">order.</span></h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="order-summary-box" id="order-summary"></div>
+
+      <div id="form-body">
+        <div class="mform-row">
+          <div class="mform-group"><label for="f-name">Your name *</label><input type="text" id="f-name" placeholder="e.g. Sarah" required /></div>
+          <div class="mform-group"><label for="f-phone">Phone number</label><input type="tel" id="f-phone" placeholder="07700 000000" /></div>
+        </div>
+        <div class="mform-row">
+          <div class="mform-group"><label for="f-email">Email address *</label><input type="email" id="f-email" placeholder="you@example.com" required /></div>
+          <div class="mform-group">
+            <label for="f-delivery">Delivery or collection?</label>
+            <select id="f-delivery">
+              <option value="">Choose…</option>
+              <option>Collect from Ballyclare</option>
+              <option>Post to me (NI)</option>
+              <option>Post to me (ROI / GB)</option>
+            </select>
+          </div>
+        </div>
+        <div class="mform-row full">
+          <div class="mform-group"><label for="f-notes">Personalisation &amp; design notes *</label><textarea id="f-notes" placeholder="Names, colours, font style, file link — anything that helps us get it right"></textarea></div>
+        </div>
+        <button class="form-submit" onclick="submitOrder()">Send order request →</button>
+        <p class="form-note">We'll reply within a few hours with a proof &amp; price confirmation.</p>
+      </div>
+
+      <div class="success-state" id="success-state">
+        <div class="success-icon">🎉</div>
+        <h3>Order received!</h3>
+        <p>Thanks — Nicole or Lavinia will be in touch shortly with your proof and price. Keep an eye on your inbox!</p>
+        <button class="btn-order" onclick="closeModal()">Back to browsing</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="script">Crafty Mammies</span>
+        <span class="tagline">Embroidery &amp; Printing Specialists</span>
+        <p>Personalised printing and embroidery based in Ballyclare, Co. Antrim. Fast turnaround, premium quality, and a personal touch on every order.</p>
+      </div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="gifts.html#children">Children's</a></li><li><a href="gifts.html#adults">Adults</a></li><li><a href="gifts.html#hen-stag">Hen &amp; Stag</a></li><li><a href="gifts.html#gifts">Gifts &amp; Keepsakes</a></li><li><a href="gifts.html#seasonal">Seasonal</a></li></ul></div>
+      <div class="footer-col"><h4>Business</h4><ul><li><a href="workwear.html">Workwear &amp; Uniforms</a></li><li><a href="workwear.html#sports">Sports Clubs</a></li><li><a href="workwear.html#schools">Schools</a></li><li><a href="workwear.html#quote">Get a Quote</a></li></ul></div>
+      <div class="footer-col"><h4>Info</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="shipping.html">Shipping &amp; Returns</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Crafty Mammies Ltd · 54 The Square, Ballyclare · craftymammiesuk@gmail.com · 02893321821</span>
+      <span>Crafted with care in Northern Ireland 🌸</span>
+    </div>
+  </footer>
+
+  <script src="../js/nav.js"></script>
+
+  <script>
+  /* ═══════════════════════════════════════════
+     CATALOGUE
+  ═══════════════════════════════════════════ */
+  const CATALOGUE = {
+    "t-shirts": {
+      title: "Personalised <span class='script'>T‑Shirts</span>",
+      eyebrow: "Kids & Adults · DTF Printed",
+      badge: "DTF Printed",
+      desc: "Custom printed t-shirts for any occasion — birthdays, hen nights, schools, family events or just because. Full-colour DTF print, crisp detail, vivid wash after wash.",
+      trust: ["🎨 Full colour DTF print","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["3–4y","5–6y","7–8y","9–11y","XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#1a1a1a",name:"Black"},
+        {hex:"#EA72A4",name:"Pink"},{hex:"#5b8dd9",name:"Royal Blue"},
+        {hex:"#f5d76e",name:"Yellow"},{hex:"#6cc580",name:"Mint"},
+        {hex:"#e87a5b",name:"Coral"},{hex:"#7c5cbc",name:"Purple"},
+        {hex:"#e0e0e0",name:"Light Grey",border:"#ccc"},{hex:"#2e3a4a",name:"Navy"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/new-bride-est-date-embroidered-jumper.png?v=1754853996&width=600",
+        "https://craftymammies.com/cdn/shop/collections/personalised-happy-halloween-kids-tshirt.jpg?v=1754822119&width=800",
+        "https://craftymammies.com/cdn/shop/collections/personalised-red-bus-tshirt.jpg?v=1754855297&width=600",
+      ],
+      reviews: [
+        {name:"Susannah",text:"Absolutely love it — arrived quickly and the quality is gorgeous. The name print is so crisp and clear!",date:"Mar 2025",colour:"#EA72A4"},
+        {name:"Mandy",text:"Ordered matching t-shirts for my daughter's party group. Every single one was perfect. Will definitely order again!",date:"Feb 2025",colour:"#5b8dd9"},
+        {name:"Claire",text:"Really impressed with how fast it came. The colour matched exactly what I picked and the font is beautiful.",date:"Jan 2025",colour:"#6cc580"},
+      ],
+    },
+    "hoodies": {
+      title: "Personalised <span class='script'>Hoodies</span>",
+      eyebrow: "Kids & Adults · Embroidered or Printed",
+      badge: "Embroidered / DTF",
+      desc: "Cosy hoodies and sweatshirts with embroidery or DTF print. Perfect for workwear, schools, sports clubs or personalised gifts. Kids' and adult sizes available.",
+      trust: ["🪡 Embroidery or DTF","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["3–4y","5–6y","7–8y","9–11y","XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#1a1a1a",name:"Black"},
+        {hex:"#EA72A4",name:"Pink"},{hex:"#5b8dd9",name:"Royal Blue"},
+        {hex:"#2e3a4a",name:"Navy"},{hex:"#e0e0e0",name:"Grey Marl",border:"#ccc"},
+        {hex:"#6cc580",name:"Sage"},{hex:"#c0392b",name:"Red"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/Screenshot2024-04-04at10.49.45_10affc22-df44-4d00-9635-3f3d2a32ea9a.png?v=1754854474&width=600",
+        "https://craftymammies.com/cdn/shop/collections/new-bride-est-date-embroidered-jumper.png?v=1754853996&width=600",
+      ],
+      reviews: [
+        {name:"Rachel",text:"The embroidery is absolutely perfect. Got one for my son and the name looks so professional. Brilliant quality.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Joanne",text:"Ordered 12 hoodies for our football club — all done on time and looked amazing. Couldn't be happier.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Emma",text:"Beautiful hoodie, super soft. The personalisation was exactly what I asked for. Fast delivery too!",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
+    "bags": {
+      title: "Personalised <span class='script'>Bags</span>",
+      eyebrow: "Adults · DTF Printed",
+      badge: "DTF Printed",
+      desc: "Tote bags and accessories — personalised with your name, initials or a custom design. Great for gifts, hen nights, charity events, or everyday use.",
+      trust: ["🎨 Full colour print","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["One size"],
+      colours: [
+        {hex:"#f5f0e8",name:"Natural",border:"#ddd"},{hex:"#1a1a1a",name:"Black"},
+        {hex:"#EA72A4",name:"Pink"},{hex:"#2e3a4a",name:"Navy"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/il_fullxfull.6566302328_3w14.jpg?v=1754852878&width=600",
+        "https://craftymammies.com/cdn/shop/collections/WLJUL2513209_LR.jpg?v=1754853020&width=600",
+      ],
+      reviews: [
+        {name:"Lisa",text:"Lovely quality tote bag, the print is vibrant and hasn't faded after washing. Great as a gift!",date:"Mar 2025",colour:"#EA72A4"},
+        {name:"Karen",text:"Ordered 10 hen night bags — they were done so quickly and looked amazing. Everyone loved them!",date:"Feb 2025",colour:"#5b8dd9"},
+        {name:"Sarah",text:"Perfect little personalised bag for my daughter's birthday. Really well made and fast turnaround.",date:"Jan 2025",colour:"#6cc580"},
+      ],
+    },
+    "bags-kids": {
+      title: "Kids' Personalised <span class='script'>Bags</span>",
+      eyebrow: "Children's · DTF Printed",
+      badge: "DTF Printed",
+      desc: "Personalised bags and backpacks for kids — perfect for school, days out, or as a gift. Add a name, a favourite character or a fun design.",
+      trust: ["🎨 Full colour print","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["One size"],
+      colours: [
+        {hex:"#f5f0e8",name:"Natural",border:"#ddd"},{hex:"#1a1a1a",name:"Black"},
+        {hex:"#EA72A4",name:"Pink"},{hex:"#5b8dd9",name:"Blue"},
+      ],
+      images: ["https://craftymammies.com/cdn/shop/collections/WLJUL2513209_LR.jpg?v=1754853020&width=600"],
+      reviews: [
+        {name:"Michelle",text:"My daughter absolutely loves her personalised bag! Great quality and such a fast turnaround.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Tracy",text:"Perfect school bag — the name print is really clear and hasn't faded at all. Would highly recommend.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Nicola",text:"Ordered as a birthday gift — she was absolutely delighted with it. Will be ordering again!",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
+    "occasions": {
+      title: "Occasion <span class='script'>Gifts</span>",
+      eyebrow: "Birthdays, Babies & More",
+      badge: "Personalised",
+      desc: "Birthdays, new babies, anniversaries, christenings — we make the perfect personalised gift. From printed teddies to embroidered keepsakes, every order is made with care.",
+      trust: ["💝 Unique & personal","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: [],
+      colours: [],
+      images: ["https://craftymammies.com/cdn/shop/collections/personalised-new-born-teddy-bear.png?v=1749583441&width=600"],
+      reviews: [
+        {name:"Amy",text:"Bought a personalised teddy for a new baby — it was absolutely gorgeous and arrived beautifully wrapped.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Gillian",text:"The keepsake blanket I ordered was stunning. Such great quality and the embroidery was perfect.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Donna",text:"So impressed with the quality of the personalised mug I ordered. Arrived quickly and it's gorgeous!",date:"Feb 2025",colour:"#f5a623"},
+      ],
+    },
+    "pyjamas": {
+      title: "Personalised <span class='script'>Pyjamas</span>",
+      eyebrow: "Children's · DTF Printed",
+      badge: "DTF Printed",
+      desc: "Cosy personalised pyjamas for kids — add their name or a favourite design. A brilliant gift for birthdays, Christmas, or just because. Available in a full range of kids' sizes.",
+      trust: ["🎨 Full colour print","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["1–2y","3–4y","5–6y","7–8y","9–10y","11–12y"],
+      colours: [
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#fce8f3",name:"Pink",border:"#f0c0dc"},
+        {hex:"#d6eaf8",name:"Blue",border:"#aed6f1"},{hex:"#d5f5e3",name:"Mint",border:"#a9dfbf"},
+      ],
+      images: ["https://craftymammies.com/cdn/shop/collections/il_fullxfull.6619478331_1f6l.jpg?v=1754854870&width=600"],
+      reviews: [
+        {name:"Lesley",text:"My little girl was so excited to get pyjamas with her name on! Brilliant quality — so soft.",date:"Mar 2025",colour:"#EA72A4"},
+        {name:"Paula",text:"Ordered as a Christmas gift — they looked amazing. Fast delivery and great communication throughout.",date:"Dec 2024",colour:"#5b8dd9"},
+        {name:"Siobhan",text:"Really lovely pyjamas, really good quality fabric and the print is vibrant. Will order again!",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
+    "cards": {
+      title: "Cards <span class='script'>&amp; Invites</span>",
+      eyebrow: "Flat Print · Locally Printed",
+      badge: "Locally Printed",
+      desc: "Party invites, birthday cards, christening announcements and printed keepsakes — designed and printed locally in Ballyclare.",
+      trust: ["🖨 Locally printed","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["A6","A5","A4"],
+      colours: [],
+      images: ["https://craftymammies.com/cdn/shop/collections/7098e3b5be3660f9788d1615dc9d9df954005a37_87b9fd69-ec0f-41d7-ace9-a48782c1821a.jpg?v=1754853666&width=600"],
+      reviews: [
+        {name:"Victoria",text:"Ordered birthday invites and they were absolutely gorgeous. Everyone commented on how professional they looked!",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Fiona",text:"Really quick turnaround on my christening cards. Exactly what I asked for — beautiful!",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Julie",text:"Party invites were stunning. So easy to deal with — sent my ideas and they designed something perfect.",date:"Jan 2025",colour:"#f5a623"},
+      ],
+    },
+    "seasonal": {
+      title: "Seasonal <span class='script'>&amp; Themed</span>",
+      eyebrow: "Halloween, Christmas & More",
+      badge: "Seasonal",
+      desc: "We always have something special for the season — Halloween, Christmas, Valentine's, Easter and more. Limited runs so it's worth getting in early.",
+      trust: ["🎃 Limited seasonal runs","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["3–4y","5–6y","7–8y","9–11y","S","M","L","XL"],
+      colours: [],
+      images: ["https://craftymammies.com/cdn/shop/collections/personalised-happy-halloween-kids-tshirt.jpg?v=1754822119&width=800"],
+      reviews: [
+        {name:"Marie",text:"Got Halloween t-shirts for the whole family — they were brilliant! So much better than shop-bought costumes.",date:"Oct 2024",colour:"#EA72A4"},
+        {name:"Laura",text:"Christmas pyjamas with my kids' names — they absolutely loved them. Ordered again this year!",date:"Dec 2024",colour:"#5b8dd9"},
+        {name:"Aisling",text:"Valentine's gift was perfect — personalised and arrived right on time. Really thoughtful touch.",date:"Feb 2025",colour:"#f5a623"},
+      ],
+    },
+    "weddings": {
+      title: "Weddings, Hens <span class='script'>&amp; Stags</span>",
+      eyebrow: "Bridal Party · Group Orders Welcome",
+      badge: "Group Orders",
+      desc: "From bride-to-be sashes and matching hen night t-shirts to personalised tote bags and wedding keepsakes — we love a big group order. Get in touch early for the best lead time.",
+      trust: ["👰 Group orders welcome","📐 Proof before print","⏱ 1–2 day turnaround","📦 Collect or post"],
+      sizes: ["XS","S","M","L","XL","2XL"],
+      colours: [
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#EA72A4",name:"Pink"},
+        {hex:"#f9d7e8",name:"Blush",border:"#f0c0dc"},{hex:"#c9a87c",name:"Champagne"},
+        {hex:"#1a1a1a",name:"Black"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/il_fullxfull.6566302328_3w14.jpg?v=1754852878&width=600",
+        "https://drive.google.com/uc?export=view&id=1Owkn4DFzAKuCVmLAAsKgAWCr2-WVGY4q",
+        "https://drive.google.com/uc?export=view&id=1iKdnIRY_KLeVxGDM1Ned8jsP4Nd-J-Ux",
+      ],
+      reviews: [
+        {name:"Stephanie",text:"Nicole sorted our entire hen party — matching t-shirts, sashes and bags. Absolutely flawless. The girls loved everything!",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Caoimhe",text:"Used Crafty Mammies for our hen do and the bridesmaid gifts. Every single piece was perfect. So easy to deal with!",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Rebecca",text:"Ordered 14 personalised tote bags for the hen group. All done in time, all perfect. Couldn't recommend more!",date:"Feb 2025",colour:"#c9a87c"},
+      ],
+    },
+  };
+
+  /* ── State ── */
+  let current = null, selectedSize = null, selectedColour = null;
+  let currentFont = 'font-script', currentTextColour = '#ffffff';
+
+  /* ── Init ── */
+  function init() {
+    const key = new URLSearchParams(window.location.search).get('category') || 't-shirts';
+    current = CATALOGUE[key] || CATALOGUE['t-shirts'];
+    document.title = `Crafty Mammies — ${stripTags(current.title)}`;
+    document.getElementById('bc-name').textContent = stripTags(current.title);
+    document.getElementById('info-eyebrow').textContent = current.eyebrow;
+    document.getElementById('info-title').innerHTML = current.title;
+    document.getElementById('info-desc').textContent = current.desc;
+    document.getElementById('main-badge').textContent = current.badge;
+    renderGallery(current.images);
+    renderTrust(current.trust);
+    renderSizes(current.sizes);
+    renderColours(current.colours);
+    renderReviews(current.reviews);
+  }
+
+  function stripTags(s) { const d = document.createElement('div'); d.innerHTML = s; return d.textContent; }
+
+  /* ── Gallery ── */
+  function renderGallery(images) {
+    if (!images.length) return;
+    document.getElementById('main-img').src = images[0];
+    document.getElementById('main-img').alt = stripTags(current.title);
+    const col = document.getElementById('thumb-col');
+    col.innerHTML = '';
+    images.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'thumb' + (i === 0 ? ' active' : '');
+      div.innerHTML = `<img src="${src}" alt="View ${i+1}" loading="lazy">`;
+      div.onclick = () => {
+        document.getElementById('main-img').src = src;
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        div.classList.add('active');
+      };
+      col.appendChild(div);
+    });
+  }
+
+  /* ── Trust ── */
+  function renderTrust(pills) {
+    document.getElementById('trust-row').innerHTML = pills.map(p => `<span class="trust-pill">${p}</span>`).join('');
+  }
+
+  /* ── Sizes ── */
+  function renderSizes(sizes) {
+    const sec = document.getElementById('sizes-section');
+    if (!sizes.length) { sec.style.display = 'none'; return; }
+    document.getElementById('sizes-grid').innerHTML = sizes.map(s =>
+      `<button class="size-btn" onclick="selectSize(this,'${s}')">${s}</button>`
+    ).join('');
+  }
+
+  function selectSize(btn, size) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected'); selectedSize = size;
+    document.getElementById('size-chosen').textContent = `— ${size}`;
+  }
+
+  /* ── Colours ── */
+  function renderColours(colours) {
+    const sec = document.getElementById('colours-section');
+    if (!colours.length) { sec.style.display = 'none'; return; }
+    document.getElementById('colours-row').innerHTML = colours.map(c => {
+      const bdr = c.border ? `border-color:${c.border}` : '';
+      return `<button class="swatch" data-name="${c.name}" style="background:${c.hex};${bdr}" onclick="selectColour(this,'${c.name}')"></button>`;
+    }).join('');
+  }
+
+  function selectColour(el, name) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected'); selectedColour = name;
+    document.getElementById('colour-chosen').textContent = `— ${name}`;
+  }
+
+  /* ── Qty ── */
+  function changeQty(d) {
+    const i = document.getElementById('qty');
+    i.value = Math.max(1, parseInt(i.value) + d);
+  }
+
+  /* ── Personalisation panel ── */
+  function togglePersonal() {
+    const body = document.getElementById('personal-body');
+    const hdr  = document.getElementById('personal-toggle');
+    const open = !body.classList.contains('open');
+    body.classList.toggle('open', open);
+    hdr.classList.toggle('open', open);
+  }
+
+  /* ── Live preview ── */
+  function updatePreview() {
+    const input = document.getElementById('name-input');
+    const el    = document.getElementById('preview-name');
+    const ind   = document.getElementById('preview-indicator');
+    const cc    = document.getElementById('char-count');
+    const val   = input.value.trim();
+    cc.textContent = `${input.value.length}/20`;
+    el.textContent = val;
+    el.classList.toggle('visible', val.length > 0);
+    ind.classList.toggle('visible', val.length > 0);
+  }
+
+  function setFont(fontClass, btn) {
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentFont = fontClass;
+    const el = document.getElementById('preview-name');
+    el.className = `preview-name ${fontClass}`;
+    el.style.color = currentTextColour;
+    applyTextShadow(el, currentTextColour);
+    if (document.getElementById('name-input').value.trim()) el.classList.add('visible');
+  }
+
+  function setTextColour(colour, btn) {
+    document.querySelectorAll('.text-colour-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentTextColour = colour;
+    const el = document.getElementById('preview-name');
+    el.style.color = colour;
+    applyTextShadow(el, colour);
+  }
+
+  function applyTextShadow(el, colour) {
+    if (colour === '#ffffff')      el.style.textShadow = '0 2px 8px rgba(0,0,0,0.35), 0 0 30px rgba(234,114,164,0.4)';
+    else if (colour === '#1a1a1a') el.style.textShadow = '0 1px 4px rgba(255,255,255,0.5)';
+    else                           el.style.textShadow = '0 2px 6px rgba(0,0,0,0.3)';
+  }
+
+  /* ── Reviews ── */
+  function renderReviews(reviews) {
+    if (!reviews || !reviews.length) return;
+    document.getElementById('review-count').textContent = `Based on ${reviews.length} recent reviews`;
+    document.getElementById('reviews-grid').innerHTML = reviews.map(r => `
+      <div class="review-card">
+        <div class="review-card-stars">★★★★★</div>
+        <p class="review-card-text">"${r.text}"</p>
+        <div class="review-card-author">
+          <div class="review-avatar" style="background:${r.colour}">${r.name[0]}</div>
+          <div><div class="review-author-name">${r.name}</div><div class="review-author-date">${r.date}</div></div>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ── Modal ── */
+  function openModal() {
+    const name   = stripTags(current.title);
+    const qty    = document.getElementById('qty').value;
+    const size   = selectedSize || '—';
+    const colour = selectedColour || '—';
+    const pname  = document.getElementById('name-input').value.trim();
+    const notes  = document.getElementById('extra-notes').value.trim();
+
+    let html = `<strong>Product:</strong> ${name}<br>
+      <strong>Size:</strong> ${size} &nbsp; <strong>Colour:</strong> ${colour} &nbsp; <strong>Qty:</strong> ${qty}`;
+    if (pname)  html += `<br><strong>Name to print:</strong> ${pname} <em>(${currentFont.replace('font-','')} font, ${currentTextColour} text)</em>`;
+    if (notes)  html += `<br><strong>Notes:</strong> ${notes}`;
+
+    document.getElementById('order-summary').innerHTML = html;
+
+    const combined = [pname ? `Name: ${pname}` : '', notes].filter(Boolean).join(' — ');
+    if (combined) document.getElementById('f-notes').value = combined;
+
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('form-body').style.display = '';
+    document.getElementById('success-state').style.display = 'none';
+  }
+
+  function handleOverlay(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+
+  function submitOrder() {
+    const name  = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    if (!name || !email) { alert('Please fill in your name and email so we can get back to you.'); return; }
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+</body>
+</html>
