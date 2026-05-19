@@ -513,6 +513,63 @@
     }
     .extra-notes:focus { outline: none; border-color: var(--pink); }
 
+    /* Position selector */
+    .position-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .position-btn {
+      padding: 9px 6px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: var(--sans);
+      font-size: 11.5px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      color: var(--dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.3;
+    }
+
+    .position-btn:hover { border-color: var(--pink); background: var(--pink-light); color: var(--pink-deep); }
+    .position-btn.selected { border-color: var(--pink); background: var(--pink-light); color: var(--pink-deep); font-weight: 500; }
+
+    .position-icon { font-size: 16px; }
+
+    .position-note {
+      font-size: 11px;
+      color: var(--mid);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* File upload */
+    .upload-wrap {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: var(--white);
+    }
+
+    .upload-wrap:hover { border-color: var(--pink); background: var(--pink-pale); }
+    .upload-wrap.has-file { border-color: var(--pink); border-style: solid; background: var(--pink-light); }
+
+    .upload-inner { display: flex; flex-direction: column; align-items: center; gap: 5px; pointer-events: none; }
+    .upload-icon { font-size: 22px; }
+    .upload-text { font-size: 13px; font-weight: 500; color: var(--dark); }
+    .upload-sub { font-size: 11px; color: var(--mid); }
+
     .field-label { font-size: 12px; font-weight: 500; color: var(--mid); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
 
     /* CTAs */
@@ -737,7 +794,7 @@
             <div class="personal-header-icon">✏️</div>
             <div class="personal-header-text">
               <h3>Add personalisation</h3>
-              <p>Type a name — watch it appear on the product</p>
+              <p id="personal-subtitle">Type a name — watch it appear on the product</p>
             </div>
             <span class="personal-header-arrow">⌄</span>
           </div>
@@ -786,6 +843,45 @@
               <button class="text-colour-btn" data-colour="#7c5cbc" style="background:#7c5cbc" onclick="setTextColour('#7c5cbc',this)" title="Purple"></button>
             </div>
 
+            <!-- PRINT POSITION — shown only for workwear/embroidery categories -->
+            <div id="position-section" style="display:none; margin-top:14px;">
+              <label class="field-label">Print / embroidery position</label>
+              <div class="position-grid" id="position-grid">
+                <button class="position-btn" onclick="selectPosition(this,'Left Breast')">
+                  <span class="position-icon">👕</span>Left Breast
+                </button>
+                <button class="position-btn" onclick="selectPosition(this,'Right Breast')">
+                  <span class="position-icon">👕</span>Right Breast
+                </button>
+                <button class="position-btn" onclick="selectPosition(this,'Big Back')">
+                  <span class="position-icon">👕</span>Big Back
+                </button>
+                <button class="position-btn" onclick="selectPosition(this,'Left Sleeve')">
+                  <span class="position-icon">👕</span>Left Sleeve
+                </button>
+                <button class="position-btn" onclick="selectPosition(this,'Right Sleeve')">
+                  <span class="position-icon">👕</span>Right Sleeve
+                </button>
+                <button class="position-btn" onclick="selectPosition(this,'Nape of Neck')">
+                  <span class="position-icon">👕</span>Nape of Neck
+                </button>
+              </div>
+              <p class="position-note">Position may affect price — we'll confirm when we get back to you.</p>
+            </div>
+
+            <!-- FILE UPLOAD — shown only for printing categories -->
+            <div id="upload-section" style="display:none; margin-top:14px;">
+              <label class="field-label">Upload your design file</label>
+              <div class="upload-wrap" id="upload-wrap" onclick="document.getElementById('design-file').click()">
+                <input type="file" id="design-file" accept=".png,.jpg,.jpeg,.pdf,.ai,.eps" style="display:none" onchange="handleFileUpload(this)" />
+                <div class="upload-inner" id="upload-inner">
+                  <span class="upload-icon">📎</span>
+                  <span class="upload-text">Click to upload PNG, JPG or PDF</span>
+                  <span class="upload-sub">For printing we need PNG format at the size you want printed</span>
+                </div>
+              </div>
+            </div>
+
             <label class="field-label" style="margin-top:14px" for="extra-notes">Additional design notes</label>
             <textarea class="extra-notes" id="extra-notes" placeholder="e.g. add a dinosaur graphic, rainbow colours, it's for a 5-year-old girl…"></textarea>
 
@@ -807,11 +903,7 @@
           <div class="delivery-row"><div class="delivery-icon">📦</div><div>Or we'll <strong>post it</strong> to you (NI, ROI &amp; GB)</div></div>
         </div>
 
-        <div class="process-strip">
-          <div class="process-step"><div class="process-step-icon">✏️</div><h4>You choose</h4><p>Pick your options &amp; personalisation</p></div>
-          <div class="process-step"><div class="process-step-icon">👀</div><h4>We proof it</h4><p>Digital proof sent before printing</p></div>
-          <div class="process-step"><div class="process-step-icon">📦</div><h4>Ready fast</h4><p>Collect or posted in 1–2 days</p></div>
-        </div>
+        <div class="process-strip" id="process-strip"></div>
 
       </div>
     </div>
@@ -862,8 +954,15 @@
         <div class="mform-row full">
           <div class="mform-group"><label for="f-notes">Personalisation &amp; design notes *</label><textarea id="f-notes" placeholder="Names, colours, font style, file link — anything that helps us get it right"></textarea></div>
         </div>
+        <div class="mform-row full" id="f-file-row" style="display:none">
+          <div class="mform-group">
+            <label for="f-file">Your design file (PNG preferred)</label>
+            <input type="file" id="f-file" accept=".png,.jpg,.jpeg,.pdf" style="padding:8px" />
+            <span style="font-size:11px;color:var(--mid,#888);margin-top:4px">PNG format at the size you want printed. If you need help with sizing just let us know in the notes.</span>
+          </div>
+        </div>
         <button class="form-submit" onclick="submitOrder()">Send order request →</button>
-        <p class="form-note">We'll reply within a few hours with a proof &amp; price confirmation.</p>
+        <p class="form-note" id="form-note">We'll reply within a few hours to confirm your order.</p>
       </div>
 
       <div class="success-state" id="success-state">
@@ -1072,27 +1171,180 @@
         {name:"Rebecca",text:"Ordered 14 personalised tote bags for the hen group. All done in time, all perfect. Couldn't recommend more!",date:"Feb 2025",colour:"#c9a87c"},
       ],
     },
+
+    /* ── WORKWEAR CATEGORIES ── */
+    "ww-hoodies": {
+      title: "Workwear <span class='script'>Hoodies &amp; Sweatshirts</span>",
+      eyebrow: "Business & Teams · Embroidered or Printed",
+      badge: "Embroidered / DTF",
+      desc: "Custom embroidered or printed hoodies and sweatshirts for your team, club or business. Left breast logo, big back print or sleeve — we'll stitch it out and send you a photo to approve before completing your order.",
+      trust: ["🪡 Embroidery or DTF","📸 Photo proof sent","⏱ Fast turnaround","📦 Collect or post"],
+      sizes: ["XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#1a1a1a",name:"Black"},{hex:"#2e3a4a",name:"Navy"},
+        {hex:"#e0e0e0",name:"Grey Marl",border:"#ccc"},{hex:"#ffffff",name:"White",border:"#ddd"},
+        {hex:"#EA72A4",name:"Pink"},{hex:"#6cc580",name:"Bottle Green"},
+        {hex:"#c0392b",name:"Red"},{hex:"#5b8dd9",name:"Royal Blue"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/Screenshot2024-04-04at10.49.45_10affc22-df44-4d00-9635-3f3d2a32ea9a.png?v=1754854474&width=600",
+        "https://craftymammies.com/cdn/shop/collections/new-bride-est-date-embroidered-jumper.png?v=1754853996&width=600",
+      ],
+      reviews: [
+        {name:"Joanne",text:"Ordered 12 hoodies for our football club — all done on time and looked amazing. The photo proof was really reassuring.",date:"Mar 2025",colour:"#EA72A4"},
+        {name:"Mark",text:"Got 20 embroidered hoodies for our trade team. Nicole was brilliant to deal with and the quality is top notch.",date:"Feb 2025",colour:"#5b8dd9"},
+        {name:"Karen",text:"School leavers hoodies — every single one perfect. The kids were delighted. Would 100% use again.",date:"Jan 2025",colour:"#6cc580"},
+      ],
+    },
+    "ww-polos": {
+      title: "Workwear <span class='script'>Polo Shirts</span>",
+      eyebrow: "Business & Teams · Embroidered",
+      badge: "Embroidered",
+      desc: "Professional embroidered polo shirts for businesses, trades and hospitality. Your logo on the left breast or wherever you need it. Available in a wide range of colours and sizes.",
+      trust: ["🪡 Embroidery or DTF","📸 Photo proof sent","⏱ Fast turnaround","📦 Collect or post"],
+      sizes: ["XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#1a1a1a",name:"Black"},{hex:"#2e3a4a",name:"Navy"},
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#c0392b",name:"Red"},
+        {hex:"#5b8dd9",name:"Royal Blue"},{hex:"#6cc580",name:"Bottle Green"},
+        {hex:"#e0e0e0",name:"Grey",border:"#ccc"},{hex:"#EA72A4",name:"Pink"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/1_6b0d57b6-f4f0-4a96-84b9-ec2353e468a0.png?v=1754854263&width=600",
+      ],
+      reviews: [
+        {name:"Paul",text:"Got polos done for our whole team. Brilliant quality, great price and Nicole had them ready really quickly.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Gillian",text:"Ordered nursery polos with our logo — they look so professional. All the staff love them!",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Declan",text:"Used Crafty Mammies for our tradesmen's hi-vis and polos. Faultless from start to finish.",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
+    "ww-tshirts": {
+      title: "Workwear <span class='script'>T-Shirts</span>",
+      eyebrow: "Business & Teams · Printed or Embroidered",
+      badge: "DTF / Embroidered",
+      desc: "Custom printed or embroidered t-shirts for your team, event or business. Full-colour DTF or embroidered logo — your choice. Perfect for sports clubs, schools, events and staff uniforms.",
+      trust: ["🎨 DTF or embroidery","📸 Photo proof sent","⏱ Fast turnaround","📦 Collect or post"],
+      sizes: ["XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#1a1a1a",name:"Black"},{hex:"#2e3a4a",name:"Navy"},
+        {hex:"#ffffff",name:"White",border:"#ddd"},{hex:"#c0392b",name:"Red"},
+        {hex:"#5b8dd9",name:"Royal Blue"},{hex:"#6cc580",name:"Bottle Green"},
+        {hex:"#e0e0e0",name:"Grey",border:"#ccc"},{hex:"#EA72A4",name:"Pink"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/personalised-happy-halloween-kids-tshirt.jpg?v=1754822119&width=800",
+        "https://craftymammies.com/cdn/shop/collections/personalised-red-bus-tshirt.jpg?v=1754855297&width=600",
+      ],
+      reviews: [
+        {name:"Sarah",text:"Ordered matching t-shirts for our charity run — they looked brilliant and everyone got loads of compliments!",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Ryan",text:"Sports club t-shirts with our crest — exactly what we wanted. Fast turnaround too.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Louise",text:"Event staff t-shirts — all perfect, all on time. Nicole is always so easy to deal with.",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
+    "ww-jackets": {
+      title: "Workwear <span class='script'>Jackets &amp; Fleeces</span>",
+      eyebrow: "Business & Teams · Embroidered",
+      badge: "Embroidered",
+      desc: "Embroidered jackets, fleeces and gilets for your team. Soft-shell, padded, or hi-vis — add your logo and look the part on site, in store, or at an event.",
+      trust: ["🪡 Embroidered logo","📸 Photo proof sent","⏱ Fast turnaround","📦 Collect or post"],
+      sizes: ["XS","S","M","L","XL","2XL","3XL"],
+      colours: [
+        {hex:"#1a1a1a",name:"Black"},{hex:"#2e3a4a",name:"Navy"},
+        {hex:"#e0e0e0",name:"Grey",border:"#ccc"},{hex:"#c0392b",name:"Red"},
+        {hex:"#f5a623",name:"Hi-Vis Yellow"},{hex:"#6cc580",name:"Bottle Green"},
+      ],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/1_6b0d57b6-f4f0-4a96-84b9-ec2353e468a0.png?v=1754854263&width=600",
+      ],
+      reviews: [
+        {name:"Brian",text:"Soft-shell jackets for our whole team with the company logo — they look incredibly professional. Great quality.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Claire",text:"Ordered fleeces for our nursery staff — warm, great quality and the logo came out beautifully.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"Stephen",text:"Hi-vis jackets with embroidered company name. Exactly what we needed and done really quickly.",date:"Feb 2025",colour:"#f5a623"},
+      ],
+    },
+    "ww-dtf": {
+      title: "Custom <span class='script'>DTF Gang Sheets</span>",
+      eyebrow: "Upload Your Design · Bulk Printing",
+      badge: "Upload & Print",
+      desc: "Have your own design? Upload it and we'll print your custom DTF transfer sheets — ideal for bulk orders. Perfect if you want to apply transfers yourself or need a large print run.",
+      trust: ["🎨 Full colour DTF","📤 Upload your PNG","⏱ Fast turnaround","📦 Collect or post"],
+      sizes: ["A4","A3","A2","A1"],
+      colours: [],
+      images: [
+        "https://craftymammies.com/cdn/shop/collections/Customgang_2.png?v=1754854167&width=700",
+      ],
+      reviews: [
+        {name:"David",text:"Used the gang sheet service for our club — brilliant quality transfers and a really fast turnaround. Will use again.",date:"Apr 2025",colour:"#EA72A4"},
+        {name:"Nicola",text:"Ordered A3 gang sheets for a large run — every one perfect. Nicole was great at advising on file format too.",date:"Mar 2025",colour:"#5b8dd9"},
+        {name:"James",text:"Really impressed with the quality of the DTF prints. Colour accuracy was spot on.",date:"Feb 2025",colour:"#6cc580"},
+      ],
+    },
   };
 
   /* ── State ── */
   let current = null, selectedSize = null, selectedColour = null;
   let currentFont = 'font-script', currentTextColour = '#ffffff';
+  let selectedPosition = null, uploadedFileName = null;
+
+  /* ── Category flags ── */
+  // needsProof: true = workwear/weddings (Nicole sends photo proof)
+  // needsPosition: true = show print position selector
+  // needsUpload: true = customer may need to upload a file
+  const CATEGORY_FLAGS = {
+    'hoodies':       { needsProof: false, needsPosition: false, needsUpload: false },
+    't-shirts':      { needsProof: false, needsPosition: false, needsUpload: false },
+    'bags':          { needsProof: false, needsPosition: false, needsUpload: false },
+    'bags-kids':     { needsProof: false, needsPosition: false, needsUpload: false },
+    'occasions':     { needsProof: false, needsPosition: false, needsUpload: false },
+    'pyjamas':       { needsProof: false, needsPosition: false, needsUpload: false },
+    'cards':         { needsProof: false, needsPosition: false, needsUpload: true  },
+    'seasonal':      { needsProof: false, needsPosition: false, needsUpload: false },
+    'weddings':      { needsProof: true,  needsPosition: true,  needsUpload: true  },
+    'ww-hoodies':    { needsProof: true,  needsPosition: true,  needsUpload: true  },
+    'ww-polos':      { needsProof: true,  needsPosition: true,  needsUpload: true  },
+    'ww-tshirts':    { needsProof: true,  needsPosition: true,  needsUpload: true  },
+    'ww-jackets':    { needsProof: true,  needsPosition: true,  needsUpload: true  },
+    'ww-dtf':        { needsProof: false, needsPosition: false, needsUpload: true  },
+  };
 
   /* ── Init ── */
   function init() {
     const key = new URLSearchParams(window.location.search).get('category') || 't-shirts';
     current = CATALOGUE[key] || CATALOGUE['t-shirts'];
+    const flags = CATEGORY_FLAGS[key] || { needsProof: false, needsPosition: false, needsUpload: false };
+
     document.title = `Crafty Mammies — ${stripTags(current.title)}`;
     document.getElementById('bc-name').textContent = stripTags(current.title);
     document.getElementById('info-eyebrow').textContent = current.eyebrow;
     document.getElementById('info-title').innerHTML = current.title;
     document.getElementById('info-desc').textContent = current.desc;
     document.getElementById('main-badge').textContent = current.badge;
+
     renderGallery(current.images);
     renderTrust(current.trust);
     renderSizes(current.sizes);
     renderColours(current.colours);
     renderReviews(current.reviews);
+    renderProcessStrip(flags.needsProof);
+
+    // Show/hide position selector and file upload
+    document.getElementById('position-section').style.display = flags.needsPosition ? 'block' : 'none';
+    document.getElementById('upload-section').style.display   = flags.needsUpload   ? 'block' : 'none';
+
+    // Update personalisation subtitle
+    if (flags.needsProof) {
+      document.getElementById('personal-subtitle').textContent = 'Add your details — we\'ll stitch it out and email you a photo';
+    }
+
+    // Show file upload in modal for relevant categories
+    if (flags.needsUpload) {
+      document.getElementById('f-file-row').style.display = '';
+    }
+
+    // Update form note
+    if (flags.needsProof) {
+      document.getElementById('form-note').textContent = 'We\'ll stitch it out and email you a photo to approve before your order is complete.';
+    }
   }
 
   function stripTags(s) { const d = document.createElement('div'); d.innerHTML = s; return d.textContent; }
@@ -1222,23 +1474,73 @@
       </div>`).join('');
   }
 
+  /* ── Process strip ── */
+  function renderProcessStrip(needsProof) {
+    const steps = needsProof
+      ? [
+          { icon: '✏️', title: 'You choose',   body: 'Pick your options &amp; personalisation' },
+          { icon: '📸', title: 'We proof it',  body: 'We stitch it out and email you a photo to approve' },
+          { icon: '📦', title: 'Ready fast',   body: 'Collect or posted once approved' },
+        ]
+      : [
+          { icon: '✏️', title: 'You choose',   body: 'Pick your options &amp; personalisation' },
+          { icon: '⚡', title: 'We get on it', body: 'Order goes straight into production' },
+          { icon: '📦', title: 'Ready fast',   body: 'Collect or posted in 1–2 days' },
+        ];
+
+    document.getElementById('process-strip').innerHTML = steps.map(s =>
+      `<div class="process-step">
+        <div class="process-step-icon">${s.icon}</div>
+        <h4>${s.title}</h4>
+        <p>${s.body}</p>
+      </div>`
+    ).join('');
+  }
+
+  /* ── Position selector ── */
+  function selectPosition(btn, pos) {
+    document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedPosition = pos;
+  }
+
+  /* ── File upload ── */
+  function handleFileUpload(input) {
+    if (!input.files.length) return;
+    uploadedFileName = input.files[0].name;
+    const wrap = document.getElementById('upload-wrap');
+    wrap.classList.add('has-file');
+    document.getElementById('upload-inner').innerHTML =
+      `<span class="upload-icon">✅</span>
+       <span class="upload-text">${uploadedFileName}</span>
+       <span class="upload-sub">File attached — we'll use this for your order</span>`;
+  }
+
   /* ── Modal ── */
   function openModal() {
-    const name   = stripTags(current.title);
-    const qty    = document.getElementById('qty').value;
-    const size   = selectedSize || '—';
-    const colour = selectedColour || '—';
-    const pname  = document.getElementById('name-input').value.trim();
-    const notes  = document.getElementById('extra-notes').value.trim();
+    const name     = stripTags(current.title);
+    const qty      = document.getElementById('qty').value;
+    const size     = selectedSize || '—';
+    const colour   = selectedColour || '—';
+    const pname    = document.getElementById('name-input').value.trim();
+    const notes    = document.getElementById('extra-notes').value.trim();
+    const position = selectedPosition ? `<br><strong>Position:</strong> ${selectedPosition}` : '';
+    const file     = uploadedFileName  ? `<br><strong>File:</strong> ${uploadedFileName}` : '';
 
     let html = `<strong>Product:</strong> ${name}<br>
       <strong>Size:</strong> ${size} &nbsp; <strong>Colour:</strong> ${colour} &nbsp; <strong>Qty:</strong> ${qty}`;
-    if (pname)  html += `<br><strong>Name to print:</strong> ${pname} <em>(${currentFont.replace('font-','')} font, ${currentTextColour} text)</em>`;
-    if (notes)  html += `<br><strong>Notes:</strong> ${notes}`;
+    if (pname)    html += `<br><strong>Name to print:</strong> ${pname} <em>(${currentFont.replace('font-','')} font, ${currentTextColour} text)</em>`;
+    if (position) html += position;
+    if (file)     html += file;
+    if (notes)    html += `<br><strong>Notes:</strong> ${notes}`;
 
     document.getElementById('order-summary').innerHTML = html;
 
-    const combined = [pname ? `Name: ${pname}` : '', notes].filter(Boolean).join(' — ');
+    const combined = [
+      pname    ? `Name: ${pname}` : '',
+      selectedPosition ? `Position: ${selectedPosition}` : '',
+      notes,
+    ].filter(Boolean).join(' — ');
     if (combined) document.getElementById('f-notes').value = combined;
 
     document.getElementById('modal').classList.add('open');
